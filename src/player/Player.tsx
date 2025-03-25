@@ -1,13 +1,13 @@
 // React Template
 import { MediaController } from 'media-chrome/react';
 import { useRef } from 'react';
-import '@mux/mux-video';
+import MuxVideo from '@mux/mux-video-react';
 
 interface PlayerProps {
     isPlaying: boolean;
 }
 
-export function DadsPlayer ({ isPlaying }: PlayerProps) {
+export function Player ({ isPlaying }: PlayerProps) {
     const videoRef = useRef<HTMLVideoElement>(null);
 
     const togglePlay = () => {
@@ -23,15 +23,16 @@ export function DadsPlayer ({ isPlaying }: PlayerProps) {
     return (
         <>
             <button onClick={togglePlay}>{isPlaying ? 'Pause' : 'Play'}</button>
+
             <MediaController id="player">
-                <mux-video
+                <MuxVideo
                     ref={videoRef}
-                    playback-id="PLtkNjmv028bYRJr8BkDlGw7SHOGkCl4d"
+                    playbackId="PLtkNjmv028bYRJr8BkDlGw7SHOGkCl4d"
                     slot="media"
-                    crossorigin
+                    crossOrigin="anonymous"
                     muted
                 />
             </MediaController>
         </>
     );
-};
+}

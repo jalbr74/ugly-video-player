@@ -1,9 +1,9 @@
-import { DadsPlayer } from './players/dads-player/DadsPlayer.tsx';
+import { Player } from './player/Player.tsx';
 
 export default function App() {
     return (
         <>
-            <DadsPlayer isPlaying={true}/>
+            <Player isPlaying={true}/>
         </>
     )
 }

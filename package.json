@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@mux/mux-video": "^0.24.4",
+    "@mux/mux-video-react": "^0.24.4",
     "media-chrome": "^4.8.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
