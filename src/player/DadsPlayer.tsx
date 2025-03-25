@@ -36,7 +36,7 @@ export function DadsPlayer () {
             <MediaController id="player">
                 <MuxVideo
                     ref={videoRef}
-                    playbackId="PLtkNjmv028bYRJr8BkDlGw7SHOGkCl4d"
+                    playbackId="rX2AIcBEIQ01QkyD5CLPEwyfaGr39tRUGzHqRBggVAvU"
                     slot="media"
                     crossOrigin="anonymous"
                     controls
@@ -45,6 +45,15 @@ export function DadsPlayer () {
                 {/*<MediaPlayButton />*/}
                 {/*<MediaMuteButton />*/}
             </MediaController>
+
+            <div className="drawer-container">
+                <div className="trigger"></div>
+                <div className="drawer">
+                    <ul>
+                        <li><button onClick={togglePlay}>{isPlaying ? 'Play' : 'Pause'}</button></li>
+                    </ul>
+                </div>
+            </div>
         </>
     );
 }
