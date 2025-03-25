@@ -6,7 +6,7 @@ interface PlayerProps {
     isPlaying: boolean;
 }
 
-export function Player ({ isPlaying }: PlayerProps) {
+export function JonathansPlayer ({ isPlaying }: PlayerProps) {
     const videoRef = useRef<HTMLVideoElement>(null);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
