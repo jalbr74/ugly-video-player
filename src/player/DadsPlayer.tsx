@@ -1,21 +1,21 @@
 // React Template
-import { MediaController } from 'media-chrome/react';
-import { useRef } from 'react';
+import { MediaController, MediaMuteButton, MediaPlayButton } from 'media-chrome/react';
+import 'media-chrome/react/media-theme';
+import { useRef, useState } from 'react';
 import MuxVideo from '@mux/mux-video-react';
 
-interface PlayerProps {
-    isPlaying: boolean;
-}
-
-export function DadsPlayer ({ isPlaying }: PlayerProps) {
+export function DadsPlayer () {
+    const [isPlaying, setPlaying] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
 
     const togglePlay = () => {
         if (videoRef.current) {
             if (isPlaying) {
                 videoRef.current.pause();
+                setPlaying(false);
             } else {
                 videoRef.current.play();
+                setPlaying(true);
             }
         }
     }
@@ -30,8 +30,11 @@ export function DadsPlayer ({ isPlaying }: PlayerProps) {
                     playbackId="PLtkNjmv028bYRJr8BkDlGw7SHOGkCl4d"
                     slot="media"
                     crossOrigin="anonymous"
+                    controls
                     muted
                 />
+                {/*<MediaPlayButton />*/}
+                {/*<MediaMuteButton />*/}
             </MediaController>
         </>
     );
