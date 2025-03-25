@@ -10,7 +10,7 @@
 .drawer {
   position: absolute;
   top: 0;
-  width: 200px;
+  width: 100%;
   left: -200px;
   height: 100%;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
