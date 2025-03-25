@@ -22,24 +22,13 @@ export function DadsPlayer () {
 
     return (
         <>
-
-
-            <div className="drawer-container">
-                <div className="trigger"></div>
-                <div className="drawer">
-                    <ul>
-                        <li><button onClick={togglePlay}>{isPlaying ? 'Play' : 'Pause'}</button></li>
-                    </ul>
-                </div>
-            </div>
-
             <MediaController id="player">
                 <MuxVideo
                     ref={videoRef}
                     playbackId="rX2AIcBEIQ01QkyD5CLPEwyfaGr39tRUGzHqRBggVAvU"
                     slot="media"
                     crossOrigin="anonymous"
-                    controls
+                    // controls
                     muted
                 />
                 {/*<MediaPlayButton />*/}
@@ -50,7 +39,7 @@ export function DadsPlayer () {
                 <div className="trigger"></div>
                 <div className="drawer">
                     <ul>
-                        <li><button onClick={togglePlay}>{isPlaying ? 'Play' : 'Pause'}</button></li>
+                        <li><button onClick={togglePlay}>{isPlaying ? 'Pause' : 'Play' }</button></li>
                     </ul>
                 </div>
             </div>
