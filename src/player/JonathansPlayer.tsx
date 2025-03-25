@@ -14,6 +14,14 @@ export function JonathansPlayer () {
     const [isPlaying, setPlaying] = useState(false);
     const [playbackSpeed, setPlaybackSpeed] = useState(0);
 
+    const elementRef = useRef(null);
+
+    const resizeElement = () => {
+        if (elementRef.current) {
+            elementRef.current.style.width = Math.floor(Math.random() * 151) + '%'; // Set your desired width
+        }
+    };
+
     useEffect(() => {
         if (videoRef.current) {
             videoRef.current.playbackRate = playbackSpeed;
@@ -143,9 +151,10 @@ export function JonathansPlayer () {
                     ref={sliderRef}
                     onMouseDown={handleMouseDown}
                 />
+                <button onClick={resizeElement} id="resize-button">Fullscreen (maybe)</button>
             </div>
             <div className={'player-container'}>
-                <MediaController id="player">
+                <MediaController ref={elementRef} id="player" style={{ width: '200px' }}>
                     <MuxVideo
                         ref={videoRef}
                         playbackId="PLtkNjmv028bYRJr8BkDlGw7SHOGkCl4d"
@@ -156,6 +165,8 @@ export function JonathansPlayer () {
                     />
                 </MediaController>
             </div>
+
+
         </>
     );
 }
