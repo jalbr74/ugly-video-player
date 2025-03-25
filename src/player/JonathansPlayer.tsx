@@ -89,7 +89,7 @@ export function JonathansPlayer () {
     }
 
     const handleMouseMove = (event: MouseEvent) => {
-        if (isDragging && sliderRef.current) {
+        if (isDragging && sliderRef.current && isPlaying) {
             const rect = sliderRef.current.getBoundingClientRect();
             const centerY = rect.top + rect.height / 2;
             let angle = (event.clientY - centerY) / 2; // Adjust the divisor to control sensitivity
