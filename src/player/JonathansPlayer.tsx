@@ -11,8 +11,26 @@ export function JonathansPlayer () {
     const [isDragging, setIsDragging] = useState(false);
     const [isReversed, setIsReversed] = useState(false);
     const [reverseInterval, setReverseInterval] = useState<NodeJS.Timeout | null>(null);
-    let videoAngle = 0;
+    const [isPlaying, setPlaying] = useState(false);
+    const [playbackSpeed, setPlaybackSpeed] = useState(0);
 
+    useEffect(() => {
+        if (videoRef.current) {
+            videoRef.current.playbackRate = playbackSpeed;
+        }
+    }, [playbackSpeed]);
+
+    const togglePlay = () => {
+        if (videoRef.current) {
+            if (isPlaying) {
+                videoRef.current.pause();
+                setPlaying(false);
+            } else {
+                videoRef.current.play();
+                setPlaying(true);
+            }
+        }
+    }
 
     const setReverse = (value : boolean) => {
         if (videoRef.current) {
@@ -53,9 +71,9 @@ export function JonathansPlayer () {
             console.log('Current angle:', angle);
         }
         if (videoRef.current) {
-            const playbackSpeed = Math.abs(angle); // Adjust the divisor as needed
-            console.log('Playback speed:', playbackSpeed);
-            videoRef.current.playbackRate = playbackSpeed;
+            const newPlaybackSpeed = Math.abs(angle); // Adjust the divisor as needed
+            console.log('New playback speed:', newPlaybackSpeed);
+            setPlaybackSpeed(newPlaybackSpeed);
         }
 
         if(!isReversed && angle < 0) {
@@ -64,7 +82,6 @@ export function JonathansPlayer () {
         if(isReversed && angle >= 0) {
             setReverse(false);
         }
-
     }
 
     const handleMouseDown = () => {
@@ -108,6 +125,14 @@ export function JonathansPlayer () {
     return (
         <>
             <div className={'slider-container'}>
+                <div className="drawer-container">
+                    <div className="trigger"></div>
+                    <div className="drawer">
+                        <ul>
+                            <li><button onClick={togglePlay}>{isPlaying ? 'Pause' : 'Play' }</button></li>
+                        </ul>
+                    </div>
+                </div>
                 <input
                     type="range"
                     min="0"

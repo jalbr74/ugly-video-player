@@ -5,8 +5,8 @@ import { useRef, useState } from 'react';
 import MuxVideo from '@mux/mux-video-react';
 
 export function DadsPlayer () {
-    const [isPlaying, setPlaying] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
+    const [isPlaying, setPlaying] = useState(false);
 
     const togglePlay = () => {
         if (videoRef.current) {
