@@ -66,3 +66,62 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+
+.drawer-container {
+  position: relative;
+  width: 130px;
+  height: 10vh;
+  background-color: #333;
+  overflow: hidden;
+}
+
+.drawer {
+  position: absolute;
+  top: 0;
+  left: -200px;
+  width: 200px;
+  height: 100%;
+  background-color: #444;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+  transition: left 0.3s ease-in-out;
+}
+
+.trigger:hover + .drawer {
+  left: 0;
+  width: 100%
+}
+
+.trigger {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 20px; /* Smaller hoverable area */
+  height: 40px; /* Height of the trigger */
+  background-color: #555;
+  cursor: pointer;
+  transform: translateY(-50%);
+  z-index: 10; /* Ensure it is above other elements */
+}
+
+.drawer ul {
+  list-style-type: none;
+  padding: 20px;
+  margin: 0;
+  text-align: right;
+}
+
+.drawer ul li {
+  margin: 15px 0;
+}
+
+.drawer ul li a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 16px;
+}
+
+.drawer ul li a:hover {
+  text-decoration: underline;
+  color: #f0a500;
+}
