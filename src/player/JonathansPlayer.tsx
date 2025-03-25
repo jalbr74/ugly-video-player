@@ -3,11 +3,7 @@ import { useRef, useState, useEffect } from 'react';
 import MuxVideo from '@mux/mux-video-react';
 import "./JonathansPlayer.css";
 
-interface PlayerProps {
-    isPlaying: boolean;
-}
-
-export function JonathansPlayer ({ isPlaying }: PlayerProps) {
+export function JonathansPlayer () {
     const videoRef = useRef<HTMLVideoElement>(null);
     const sliderRef = useRef<HTMLInputElement>(null);
     const [currentTime, setCurrentTime] = useState(0);
@@ -16,15 +12,7 @@ export function JonathansPlayer ({ isPlaying }: PlayerProps) {
     const [isReversed, setIsReversed] = useState(false);
     const [reverseInterval, setReverseInterval] = useState<NodeJS.Timeout | null>(null);
 
-    const togglePlay = () => {
-        if (videoRef.current) {
-            if (isPlaying) {
-                videoRef.current.pause();
-            } else {
-                videoRef.current.play();
-            }
-        }
-    }
+
     const setReverse = (value : boolean) => {
         if (videoRef.current) {
             if (isReversed) {
@@ -118,27 +106,29 @@ export function JonathansPlayer ({ isPlaying }: PlayerProps) {
 
     return (
         <>
-            <button onClick={togglePlay}>{isPlaying ? 'Pause' : 'Play'}</button>
-            {/*<button onClick={toggleReverse}>{isReversed ? 'Play Forward' : 'Play Reverse'}</button>*/}
-            <input
-                type="range"
-                min="0"
-                max={duration}
-                value={currentTime}
-                onChange={handleSliderChange}
-                className="rotated-slider"
-                ref={sliderRef}
-                onMouseDown={handleMouseDown}
-            />
-            <MediaController id="player">
-                <MuxVideo
-                    ref={videoRef}
-                    playbackId="PLtkNjmv028bYRJr8BkDlGw7SHOGkCl4d"
-                    slot="media"
-                    crossOrigin="anonymous"
-                    muted
+            <div className={'slider-container'}>
+                <input
+                    type="range"
+                    min="0"
+                    max={duration}
+                    value={currentTime}
+                    onChange={handleSliderChange}
+                    className="rotated-slider"
+                    ref={sliderRef}
+                    onMouseDown={handleMouseDown}
                 />
-            </MediaController>
+            </div>
+            <div className={'player-container'}>
+                <MediaController id="player">
+                    <MuxVideo
+                        ref={videoRef}
+                        playbackId="PLtkNjmv028bYRJr8BkDlGw7SHOGkCl4d"
+                        slot="media"
+                        crossOrigin="anonymous"
+                        muted
+                    />
+                </MediaController>
+            </div>
         </>
     );
 }

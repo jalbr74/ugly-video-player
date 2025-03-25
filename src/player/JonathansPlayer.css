@@ -1,4 +1,16 @@
 .rotated-slider {
     transform: rotate(0); /* Adjust the angle as needed */
     transform-origin: center;
+    width: 70vw;
+}
+
+.slider-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}
+
+.player-container {
+
 }
