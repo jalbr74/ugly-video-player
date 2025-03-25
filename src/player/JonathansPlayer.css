@@ -1,0 +1,4 @@
+.rotated-slider {
+    transform: rotate(0); /* Adjust the angle as needed */
+    transform-origin: center;
+}

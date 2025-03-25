@@ -1,6 +1,7 @@
 import { MediaController } from 'media-chrome/react';
 import { useRef, useState, useEffect } from 'react';
 import MuxVideo from '@mux/mux-video-react';
+import "./JonathansPlayer.css";
 
 interface PlayerProps {
     isPlaying: boolean;
@@ -8,8 +9,12 @@ interface PlayerProps {
 
 export function JonathansPlayer ({ isPlaying }: PlayerProps) {
     const videoRef = useRef<HTMLVideoElement>(null);
+    const sliderRef = useRef<HTMLInputElement>(null);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
+    const [isDragging, setIsDragging] = useState(false);
+    const [isReversed, setIsReversed] = useState(false);
+    const [reverseInterval, setReverseInterval] = useState<NodeJS.Timeout | null>(null);
 
     const togglePlay = () => {
         if (videoRef.current) {
@@ -18,6 +23,23 @@ export function JonathansPlayer ({ isPlaying }: PlayerProps) {
             } else {
                 videoRef.current.play();
             }
+        }
+    }
+    const setReverse = (value : boolean) => {
+        if (videoRef.current) {
+            if (isReversed) {
+                clearInterval(reverseInterval!);
+                videoRef.current.play();
+            } else {
+                videoRef.current.pause();
+                const interval = setInterval(() => {
+                    if (videoRef.current) {
+                        videoRef.current.currentTime = Math.max(0, videoRef.current.currentTime - (videoRef.current.playbackRate/10));
+                    }
+                }, 100);
+                setReverseInterval(interval);
+            }
+            setIsReversed(value);
         }
     }
 
@@ -34,9 +56,44 @@ export function JonathansPlayer ({ isPlaying }: PlayerProps) {
     }
 
     const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (videoRef.current) {
-            videoRef.current.currentTime = Number(event.target.value);
+        let angle = 0;
+        if (sliderRef.current) {
+            const transform = sliderRef.current.style.transform;
+            const match = transform.match(/rotate\(([-\d.]+)deg\)/);
+            angle = match ? parseFloat(match[1]) : 0;
+            console.log('Current angle:', angle);
         }
+        if (videoRef.current) {
+            const playbackSpeed = Math.abs(angle); // Adjust the divisor as needed
+            console.log('Playback speed:', playbackSpeed);
+            videoRef.current.playbackRate = playbackSpeed;
+        }
+
+        if(!isReversed && angle < 0) {
+            setReverse(true); // Set reverse based on angle
+        }
+        if(isReversed && angle >= 0) {
+            setReverse(false);
+        }
+
+    }
+
+    const handleMouseDown = () => {
+        setIsDragging(true);
+    }
+
+    const handleMouseMove = (event: MouseEvent) => {
+        if (isDragging && sliderRef.current) {
+            const rect = sliderRef.current.getBoundingClientRect();
+            const centerY = rect.top + rect.height / 2;
+            let angle = (event.clientY - centerY) / 2; // Adjust the divisor to control sensitivity
+            angle = Math.min(Math.max(angle, -16), 16); // Clamp the angle to prevent excessive rotation
+            sliderRef.current.style.transform = `rotate(${angle}deg)`;
+        }
+    }
+
+    const handleMouseUp = () => {
+        setIsDragging(false);
     }
 
     useEffect(() => {
@@ -45,23 +102,33 @@ export function JonathansPlayer ({ isPlaying }: PlayerProps) {
             videoRef.current.addEventListener('loadedmetadata', handleLoadedMetadata);
         }
 
+        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('mouseup', handleMouseUp);
+
         return () => {
             if (videoRef.current) {
                 videoRef.current.removeEventListener('timeupdate', handleTimeUpdate);
                 videoRef.current.removeEventListener('loadedmetadata', handleLoadedMetadata);
             }
+
+            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('mouseup', handleMouseUp);
         }
-    }, []);
+    }, [isDragging]);
 
     return (
         <>
             <button onClick={togglePlay}>{isPlaying ? 'Pause' : 'Play'}</button>
+            {/*<button onClick={toggleReverse}>{isReversed ? 'Play Forward' : 'Play Reverse'}</button>*/}
             <input
                 type="range"
                 min="0"
                 max={duration}
                 value={currentTime}
                 onChange={handleSliderChange}
+                className="rotated-slider"
+                ref={sliderRef}
+                onMouseDown={handleMouseDown}
             />
             <MediaController id="player">
                 <MuxVideo
