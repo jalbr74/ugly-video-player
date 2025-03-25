@@ -22,7 +22,16 @@ export function DadsPlayer () {
 
     return (
         <>
-            <button onClick={togglePlay}>{isPlaying ? 'Pause' : 'Play'}</button>
+
+
+            <div className="drawer-container">
+                <div className="trigger"></div>
+                <div className="drawer">
+                    <ul>
+                        <li><button onClick={togglePlay}>{isPlaying ? 'Play' : 'Pause'}</button></li>
+                    </ul>
+                </div>
+            </div>
 
             <MediaController id="player">
                 <MuxVideo
