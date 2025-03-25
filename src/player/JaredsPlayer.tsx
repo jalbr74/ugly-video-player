@@ -7,7 +7,7 @@ interface PlayerProps {
     isPlaying: boolean;
 }
 
-export function Player ({ isPlaying }: PlayerProps) {
+export function JaredsPlayer ({ isPlaying }: PlayerProps) {
     const videoRef = useRef<HTMLVideoElement>(null);
 
     const togglePlay = () => {
@@ -22,16 +22,7 @@ export function Player ({ isPlaying }: PlayerProps) {
 
     return (
         <>
-
-
-            <div className="drawer-container">
-                <div className="trigger"></div>
-                <div className="drawer">
-                    <ul>
-                        <li><button onClick={togglePlay}>{isPlaying ? 'Play' : 'Pause'}</button></li>
-                    </ul>
-                </div>
-            </div>
+            <button onClick={togglePlay}>{isPlaying ? 'Pause' : 'Play'}</button>
 
             <MediaController id="player">
                 <MuxVideo

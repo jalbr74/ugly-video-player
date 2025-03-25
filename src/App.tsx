@@ -1,9 +1,9 @@
-import { Player } from './player/Player.tsx';
+import { JonathansPlayer } from './player/JonathansPlayer.tsx';
 
 export default function App() {
     return (
         <>
-            <Player isPlaying={true}/>
+            <JonathansPlayer isPlaying={true}/>
         </>
     )
 }
