@@ -11,6 +11,7 @@ export function JonathansPlayer () {
     const [isDragging, setIsDragging] = useState(false);
     const [isReversed, setIsReversed] = useState(false);
     const [reverseInterval, setReverseInterval] = useState<NodeJS.Timeout | null>(null);
+    let videoAngle = 0;
 
 
     const setReverse = (value : boolean) => {
@@ -126,6 +127,7 @@ export function JonathansPlayer () {
                         slot="media"
                         crossOrigin="anonymous"
                         muted
+                        // style={{ transform: `rotate(${videoAngle}deg)` }}
                     />
                 </MediaController>
             </div>
